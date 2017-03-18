@@ -1,10 +1,11 @@
 (ns irresponsible.thorium
-  (:require [clojure.spec :as s]))
+  (:require [#?(:clj clojure.spec :cljs cljs.spec) :as s]))
 
 (defonce ^{:dynamic true
            :doc "A compile-time flag that controls whether probes are compiled into code using them"}
   *compile-traces*
-  (not= "false" (System/getProperty "irresponsible.thorium.compile-traces")))
+  #?(:clj  (not= "false" (System/getProperty "irresponsible.thorium.compile-traces"))
+     :cljs true))
 
 (defonce ^{:dynamic true
            :doc "Holds a volatile map of traces when in the dynamic scope fo a trap"}
@@ -54,7 +55,7 @@
     `(let [e# ~expr]
        (probe ~key (fn [m# k#] (assoc m# k# e#)))
        e#)
-    ~expr))
+    expr))
 
 (s/fdef ?=
    :args (s/cat :name keyword? :expr any?))        

@@ -18,13 +18,13 @@
        :version (get-env :version)
        :description "Test and debugging probes that don't make it into production"
        :url "https://github.com/irresponsible/thorium"
-       :scm {:url "https://github.com/irresponsible/oolong"}
+       :scm {:url "https://github.com/irresponsible/thorium"}
        :license {"MIT" "https://en.wikipedia.org/MIT_License"}}
   test-cljs {:js-env :phantom}
   target  {:dir #{"target"}})
 
 (deftask testing []
-  (set-env! :source-paths #(conj % "test")
+  (set-env! :source-paths   #(conj % "test")
             :resource-paths #(conj % "test"))
   identity)
 
